@@ -45,6 +45,9 @@ About additional resources, you could learn more about the Parachain network arc
 	- Compile the WebAssembly runtime binary
 	- Generate the genesis state from the chain specification for the parachain.
 - Obtain a parachain slot (No longer valid due to **Polkadot 2.0 - Agile Coretime**)
+
+<img src="https://github.com/user-attachments/assets/cffbc9fb-937b-4851-bc5f-8de8a6739cbe" width="50%"/>
+
 - Acquire a parachain execution core on Coretime Marketplace [https://app.regionx.tech/?network=paseo](https://app.regionx.tech/?network=paseo)
   - Go to **PASEO faucet** to request some testnet tokens: [https://faucet.polkadot.io/](https://faucet.polkadot.io/)
 	- Transfer from **PASEO Relaychain** to **PASEO Coretime**
@@ -52,3 +55,7 @@ About additional resources, you could learn more about the Parachain network arc
 	- Check a new core: [https://app.regionx.tech/regions?network=paseo&paraId=2034&core=24](https://app.regionx.tech/regions?network=paseo&paraId=2034&core=24)
 - Open Message Passing Channels
 - Deploy a reversed parachain to an execution core
+
+### XCM Workshop & Transfer assets with XCM
+
+https://www.shawntabrizi.com/xcm-workshop/#/
