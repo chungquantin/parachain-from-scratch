@@ -109,7 +109,7 @@ pub type SignedExtra = (
     frame_system::CheckNonce<Runtime>,
     frame_system::CheckWeight<Runtime>,
     pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
-    // TODO: Configure signed extension for storage weight reclaim for Cumulus Parachain block.
+    cumulus_primitives_storage_weight_reclaim::StorageWeightReclaim<Runtime>,
     frame_metadata_hash_extension::CheckMetadataHash<Runtime>,
 );
 
@@ -250,7 +250,13 @@ const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 // /// Relay chain slot duration, in milliseconds.
 // const RELAY_CHAIN_SLOT_DURATION_MILLIS: u32 = 6000;
 
-// TODO: Configure Cumulus Aura consensus hook
+/// Aura consensus hook
+type ConsensusHook = cumulus_pallet_aura_ext::FixedVelocityConsensusHook<
+    Runtime,
+    RELAY_CHAIN_SLOT_DURATION_MILLIS,
+    BLOCK_PROCESSING_VELOCITY,
+    UNINCLUDED_SEGMENT_CAPACITY,
+>;
 
 /// The version information used to identify this runtime when compiled natively.
 #[cfg(feature = "std")]
@@ -282,12 +288,14 @@ mod runtime {
     #[runtime::pallet_index(0)]
     pub type System = frame_system::Pallet<Runtime>;
 
-    // TODO: Configure Parachain System (Index = 1)
+    #[runtime::pallet_index(1)]
+    pub type ParachainSystem = cumulus_pallet_parachain_system::Pallet<Runtime>;
 
     #[runtime::pallet_index(2)]
     pub type Timestamp = pallet_timestamp::Pallet<Runtime>;
 
-    // TODO: Configure Parachain Info (Index = 2)
+    #[runtime::pallet_index(3)]
+    pub type ParachainInfo = parachain_info::Pallet<Runtime>;
 
     // Monetary stuff.
     #[runtime::pallet_index(10)]
@@ -303,17 +311,16 @@ mod runtime {
     #[runtime::pallet_index(20)]
     pub type Authorship = pallet_authorship::Pallet<Runtime>;
 
-    // TODO: Configure Collator Selection (Index = 21)
+    #[runtime::pallet_index(21)]
+    pub type CollatorSelection = pallet_collator_selection::Pallet<Runtime>;
 
     #[runtime::pallet_index(22)]
     pub type Session = pallet_session::Pallet<Runtime>;
     #[runtime::pallet_index(23)]
     pub type Aura = pallet_aura::Pallet<Runtime>;
 
-    // TODO: Configure Cumulus Pallet Aura Extension (Index = 24)
-
-    #[runtime::pallet_index(25)]
-    pub type Grandpa = pallet_grandpa::Pallet<Runtime>;
+    #[runtime::pallet_index(24)]
+    pub type CumulusPalletAuraExtension = cumulus_pallet_aura_ext::Pallet<Runtime>;
 
     // XCM helpers.
 
@@ -326,4 +333,7 @@ mod runtime {
     // TODO: Configure Message Queue (Index = 33)
 }
 
-// TODO: Register validate block
+cumulus_pallet_parachain_system::register_validate_block! {
+    Runtime = Runtime,
+    BlockExecutor = cumulus_pallet_aura_ext::BlockExecutor::<Runtime, Executive>,
+}

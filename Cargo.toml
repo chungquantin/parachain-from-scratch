@@ -9,7 +9,7 @@ license = "Unlicense"
 repository = "https://github.com/r0gue-io/base-parachain"
 
 [workspace]
-members = ["solo-node", "runtime"]
+members = ["parachain-node", "runtime"]
 resolver = "2"
 
 [workspace.dependencies]
@@ -42,7 +42,7 @@ frame-benchmarking = { version = "36.0.0", default-features = false }
 frame-benchmarking-cli = "40.0.0"
 frame-executive = { version = "36.0.0", default-features = false }
 frame-support = { version = "36.0.0", default-features = false }
-frame-system = { version = "36.0.1", default-features = false }
+frame-system = { version = "36.1.0", default-features = false }
 frame-system-benchmarking = { version = "36.0.0", default-features = false }
 frame-system-rpc-runtime-api = { version = "33.0.0", default-features = false }
 frame-try-runtime = { version = "0.42.0", default-features = false }
@@ -93,35 +93,33 @@ sp-version = { version = "36.0.0", default-features = false }
 substrate-frame-rpc-system = "36.0.0"
 
 # Polkadot
-# TODO: Enable workspace dependencies
-# pallet-xcm = { version = "15.0.0", default-features = false }
-# polkadot-cli = "15.0.0"
-# polkadot-parachain-primitives = { version = "13.0.0", default-features = false }
-# polkadot-primitives = "14.0.0"
-# polkadot-runtime-common = { version = "15.0.0", default-features = false }
-# xcm = { version = "14.0.2", package = "staging-xcm", default-features = false }
-# xcm-builder = { version = "15.0.0", package = "staging-xcm-builder", default-features = false }
-# xcm-executor = { version = "15.0.0", package = "staging-xcm-executor", default-features = false }
+pallet-xcm = { version = "15.0.0", default-features = false }
+polkadot-cli = "15.0.0"
+polkadot-parachain-primitives = { version = "13.0.0", default-features = false }
+polkadot-primitives = "14.0.0"
+polkadot-runtime-common = { version = "15.0.0", default-features = false }
+xcm = { version = "14.0.3", package = "staging-xcm", default-features = false }
+xcm-builder = { version = "15.0.0", package = "staging-xcm-builder", default-features = false }
+xcm-executor = { version = "15.0.0", package = "staging-xcm-executor", default-features = false }
 
 # Cumulus
-# TODO: Enable workspace dependencies
-# cumulus-client-cli = "0.15.0"
-# cumulus-client-collator = "0.15.0"
-# cumulus-client-consensus-aura = "0.15.0"
-# cumulus-client-consensus-common = "0.15.0"
-# cumulus-client-consensus-proposer = "0.14.0"
-# cumulus-client-service = "0.15.0"
-# cumulus-pallet-aura-ext = { version = "0.15.0", default-features = false }
-# cumulus-pallet-parachain-system = { version = "0.15.0", default-features = false }
-# cumulus-pallet-session-benchmarking = { version = "17.0.0", default-features = false }
-# cumulus-pallet-xcm = { version = "0.15.0", default-features = false }
-# cumulus-pallet-xcmp-queue = { version = "0.15.0", default-features = false }
-# cumulus-primitives-aura = { version = "0.14.0", default-features = false }
-# cumulus-primitives-core = { version = "0.14.0", default-features = false }
-# cumulus-primitives-parachain-inherent = "0.14.0"
-# cumulus-primitives-storage-weight-reclaim = { version = "6.0.1", default-features = false }
-# cumulus-primitives-utility = { version = "0.15.0", default-features = false }
-# cumulus-relay-chain-interface = "0.15.0"
-# pallet-collator-selection = { version = "17.0.0", default-features = false }
-# parachains-common = { version = "15.0.0", default-features = false }
-# parachain-info = { version = "0.15.0", package = "staging-parachain-info", default-features = false }
+cumulus-client-cli = "0.15.0"
+cumulus-client-collator = "0.15.0"
+cumulus-client-consensus-aura = "0.15.0"
+cumulus-client-consensus-common = "0.15.0"
+cumulus-client-consensus-proposer = "0.14.0"
+cumulus-client-service = "0.15.0"
+cumulus-pallet-aura-ext = { version = "0.15.0", default-features = false }
+cumulus-pallet-parachain-system = { version = "0.15.0", default-features = false }
+cumulus-pallet-session-benchmarking = { version = "17.0.0", default-features = false }
+cumulus-pallet-xcm = { version = "0.15.0", default-features = false }
+cumulus-pallet-xcmp-queue = { version = "0.15.0", default-features = false }
+cumulus-primitives-aura = { version = "0.14.0", default-features = false }
+cumulus-primitives-core = { version = "0.14.0", default-features = false }
+cumulus-primitives-parachain-inherent = "0.14.0"
+cumulus-primitives-storage-weight-reclaim = { version = "6.0.2", default-features = false }
+cumulus-primitives-utility = { version = "0.15.0", default-features = false }
+cumulus-relay-chain-interface = "0.15.0"
+pallet-collator-selection = { version = "17.0.0", default-features = false }
+parachains-common = { version = "15.0.0", default-features = false }
+parachain-info = { version = "0.15.0", package = "staging-parachain-info", default-features = false }

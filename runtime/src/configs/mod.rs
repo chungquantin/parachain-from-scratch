@@ -27,90 +27,43 @@
 // mod xcm_config;
 
 // Substrate and Polkadot dependencies
-// TODO: Import crates
-// use cumulus_pallet_parachain_system::RelayNumberMonotonicallyIncreases;
-// use cumulus_primitives_core::{AggregateMessageOrigin, ParaId};
+use cumulus_pallet_parachain_system::RelayNumberMonotonicallyIncreases;
+use cumulus_primitives_core::{AggregateMessageOrigin, ParaId};
 use frame_support::{
     derive_impl,
-    // dispatch::DispatchClass,
+    dispatch::DispatchClass,
     parameter_types,
     traits::{
-        ConstBool,
-        ConstU32,
-        ConstU64,
-        ConstU8,
-        // EitherOfDiverse,
-        // TransformOrigin,
-        VariantCountOf,
+        ConstBool, ConstU32, ConstU64, ConstU8, EitherOfDiverse, TransformOrigin, VariantCountOf,
     },
     weights::{ConstantMultiplier, Weight},
     PalletId,
 };
 use frame_system::{
     limits::{BlockLength, BlockWeights},
-    // EnsureRoot,
+    EnsureRoot,
 };
-// TODO: Import crates
-// use pallet_xcm::{EnsureXcm, IsVoiceOfBody};
-// use parachains_common::message_queue::{NarrowOriginToSibling, ParaIdToSibling};
-// use polkadot_runtime_common::{
-//     xcm_sender::NoPriceForMessageDelivery, BlockHashCount, SlowAdjustingFeeUpdate,
-// };
-use pallet_transaction_payment::{
-    ConstFeeMultiplier,
-    //  FungibleAdapter,
-    Multiplier,
+use pallet_transaction_payment::{ConstFeeMultiplier, FungibleAdapter, Multiplier};
+use pallet_xcm::{EnsureXcm, IsVoiceOfBody};
+use parachains_common::message_queue::{NarrowOriginToSibling, ParaIdToSibling};
+use polkadot_runtime_common::{
+    xcm_sender::NoPriceForMessageDelivery, BlockHashCount, SlowAdjustingFeeUpdate,
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_runtime::{traits::One, Perbill};
 use sp_version::RuntimeVersion;
-// TODO: Import crates
-// use xcm::latest::prelude::BodyId;
+use xcm::latest::prelude::BodyId;
 
-// TODO: Import crates
 // Local module imports
 use super::{
-    weights::{
-        BlockExecutionWeight,
-        // ExtrinsicBaseWeight,
-        RocksDbWeight,
-    },
-    AccountId,
-    Aura,
-    Balance,
-    Balances,
-    Block,
-    BlockNumber,
-    // CollatorSelection,
-    // ConsensusHook,
-    Hash,
-    // MessageQueue,
-    Nonce,
-    PalletInfo,
-    // ParachainSystem,
-    Runtime,
-    RuntimeCall,
-    RuntimeEvent,
-    RuntimeFreezeReason,
-    RuntimeHoldReason,
-    RuntimeOrigin,
-    RuntimeTask,
-    // Session,
-    SessionKeys,
-    System,
-    WeightToFee,
-    // XcmpQueue,
-    // AVERAGE_ON_INITIALIZE_RATIO,
-    EXISTENTIAL_DEPOSIT,
-    HOURS,
-    // MAXIMUM_BLOCK_WEIGHT,
-    MICROUNIT,
-    NORMAL_DISPATCH_RATIO,
-    SLOT_DURATION,
-    VERSION,
+    weights::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight},
+    AccountId, Aura, Balance, Balances, Block, BlockNumber, CollatorSelection, ConsensusHook, Hash,
+    MessageQueue, Nonce, PalletInfo, ParachainSystem, Runtime, RuntimeCall, RuntimeEvent,
+    RuntimeFreezeReason, RuntimeHoldReason, RuntimeOrigin, RuntimeTask, Session, SessionKeys,
+    System, WeightToFee, XcmpQueue, AVERAGE_ON_INITIALIZE_RATIO, EXISTENTIAL_DEPOSIT, HOURS,
+    MAXIMUM_BLOCK_WEIGHT, MICROUNIT, NORMAL_DISPATCH_RATIO, SLOT_DURATION, VERSION,
 };
-// TODO: Import crates
-// use xcm_config::{RelayLocation, XcmOriginToTransactDispatchOrigin};
+use xcm_config::{RelayLocation, XcmOriginToTransactDispatchOrigin};
 
 parameter_types! {
     pub const Version: RuntimeVersion = VERSION;
@@ -261,19 +214,6 @@ impl pallet_sudo::Config for Runtime {
     type RuntimeEvent = RuntimeEvent;
     type RuntimeCall = RuntimeCall;
     type WeightInfo = (); // Configure based on benchmarking results.
-}
-
-// TODO: Remove when switching to parachain.
-impl pallet_grandpa::Config for Runtime {
-    type RuntimeEvent = RuntimeEvent;
-
-    type WeightInfo = ();
-    type MaxAuthorities = ConstU32<32>;
-    type MaxNominators = ConstU32<0>;
-    type MaxSetIdSessionEntries = ConstU64<0>;
-
-    type KeyOwnerProof = sp_core::Void;
-    type EquivocationReportSystem = ();
 }
 
 // TODO: Configure variables

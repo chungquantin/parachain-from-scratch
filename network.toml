@@ -10,9 +10,11 @@ name = "bob"
 validator = true
 
 [[parachains]]
-id = 2000
-# TODO: Update the node path when switching to parachain-node
+id = 1234
 default_command = "./target/release/parachain-from-scratch-node"
 
 [[parachains.collators]]
 name = "collator-01"
+
+[[parachains.collators]]
+name = "collator-02"
