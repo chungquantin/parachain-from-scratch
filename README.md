@@ -39,6 +39,9 @@ About additional resources, you could learn more about the Parachain network arc
 	- register_validate_block: [https://paritytech.github.io/polkadot-sdk/master/cumulus_pallet_parachain_system/macro.register_validate_block.html](https://paritytech.github.io/polkadot-sdk/master/cumulus_pallet_parachain_system/macro.register_validate_block.html)
 
 ### Register a parachain on the testnet relaychain
+
+![image](https://github.com/user-attachments/assets/4af5a14b-3003-478a-bad2-4d7def075b66)
+
 - Obtain a unique identifier for your parachain
 - Register a parachain
   - Reserve a **unique identifier** on the specific relay chain that you want to connect to.
