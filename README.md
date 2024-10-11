@@ -1,5 +1,7 @@
 # Create a Parachain from scratch
 
+<img width="1077" alt="Screenshot 2024-10-11 at 16 16 13" src="https://github.com/user-attachments/assets/e157cfdb-3dbe-4300-831a-cf828881b71b">
+
 The repository contains two nodes `parachain-node` and `solochain-node` and one `runtime`. The goal of this tutorial is to help you convert your Substrate runtime to be compatible with the `parachain-node` and register a new parachain on the PASEO testnet. 
 
 ## Getting started
