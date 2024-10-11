@@ -2,10 +2,6 @@
 
 The repository contains two nodes `parachain-node` and `solochain-node` and one `runtime`. The goal of this tutorial is to help you convert your Substrate runtime to be compatible with the `parachain-node` and register a new parachain on the PASEO testnet. 
 
-About additional resources, you could learn more about the Parachain network architecture in here: 
-- Breakdown the sharded network design of Polkadot: https://x.com/chungquantin/status/1809864276850704882
-- Breakdown Relaychain hybrid consensus: https://x.com/openguildwtf/status/1809203505649037391
-
 ## Getting started
 First step is to follow all the TODOs in the repository and convert your `solochain-runtime` to a `parachain-runtime` until it works with the `parachain-node`. To test the the local relaychain network, run the below command:
 ```
@@ -14,11 +10,27 @@ pop up parachain -f ./network.toml
 
 If you are not familiar with the `pop-cli` tool, learn more in here: https://github.com/r0gue-io/pop-cli
 
+### Understanding the architecture of the Polkadot network
+About additional resources, you could learn more about the Parachain network architecture in here: 
+- Breakdown the sharded network design of Polkadot: https://x.com/chungquantin/status/1809864276850704882
+- Breakdown Relaychain hybrid consensus: https://x.com/openguildwtf/status/1809203505649037391
+
+#### Substrate Runtime / Node architecture
+![image](https://github.com/user-attachments/assets/0ceb5e33-1fa6-4080-b16f-9cf060f170d7)
+
+#### Sharded network design and block production / finalization mechanism
+![image](https://github.com/user-attachments/assets/de283c8a-f670-4699-bbdd-06d519570fd1)
+
+
 ### Convert a solochain node to a parachain node with Cumulus
 ### Resolve all the TODOs
 ![image](https://github.com/user-attachments/assets/d6ec39a0-ff1f-47b9-8a79-30c12bb4dec4)
 
 ### Materials to learn about Cumulus
+
+![image](https://github.com/user-attachments/assets/09d0cc5f-dc7e-430a-afa6-9e978cf628bd)
+
+
 - Polkadot SDK - Cumulus: [https://github.com/paritytech/polkadot-sdk/tree/master/cumulus](https://github.com/paritytech/polkadot-sdk/tree/master/cumulus)
 - Polkadot SDK Guide - Cumulus: [https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/cumulus/index.html](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/cumulus/index.html)
 - Runtime modules & configuration:
