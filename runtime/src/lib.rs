@@ -50,11 +50,14 @@ use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
 use frame_support::weights::{
-    constants::WEIGHT_REF_TIME_PER_SECOND, Weight, WeightToFeeCoefficient, WeightToFeeCoefficients,
+    // constants::WEIGHT_REF_TIME_PER_SECOND,
+    // Weight,
+    WeightToFeeCoefficient,
+    WeightToFeeCoefficients,
     WeightToFeePolynomial,
 };
 pub use sp_consensus_aura::sr25519::AuthorityId as AuraId;
-pub use sp_runtime::{MultiAddress, Perbill, Permill};
+pub use sp_runtime::{traits::NumberFor, MultiAddress, Perbill, Permill};
 
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
@@ -106,7 +109,7 @@ pub type SignedExtra = (
     frame_system::CheckNonce<Runtime>,
     frame_system::CheckWeight<Runtime>,
     pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
-    cumulus_primitives_storage_weight_reclaim::StorageWeightReclaim<Runtime>,
+    // TODO: Configure signed extension for storage weight reclaim for Cumulus Parachain block.
     frame_metadata_hash_extension::CheckMetadataHash<Runtime>,
 );
 
@@ -115,7 +118,8 @@ pub type UncheckedExtrinsic =
     generic::UncheckedExtrinsic<Address, RuntimeCall, Signature, SignedExtra>;
 
 /// Migrations to apply on runtime upgrade.
-pub type Migrations = pallet_xcm::migration::MigrateToLatestXcmVersion<Runtime>;
+// TODO: Configure pallet
+// pub type Migrations = pallet_xcm::migration::MigrateToLatestXcmVersion<Runtime>;
 
 /// Executive: handles dispatch to the various modules.
 pub type Executive = frame_executive::Executive<
@@ -124,7 +128,7 @@ pub type Executive = frame_executive::Executive<
     frame_system::ChainContext<Runtime>,
     Runtime,
     AllPalletsWithSystem,
-    Migrations,
+    // Migrations,
 >;
 
 /// Handles converting a weight scalar to a fee value, based on the scale and granularity of the
@@ -184,8 +188,8 @@ impl_opaque_keys! {
 
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-    spec_name: create_runtime_str!("parachain-template-runtime"),
-    impl_name: create_runtime_str!("parachain-template-runtime"),
+    spec_name: create_runtime_str!("parachain-from-scratch"),
+    impl_name: create_runtime_str!("parachain-from-scratch"),
     authoring_version: 1,
     spec_version: 1,
     impl_version: 0,
@@ -220,36 +224,33 @@ pub const MICROUNIT: Balance = 1_000_000;
 /// The existential deposit. Set to 1/10 of the Connected Relay Chain.
 pub const EXISTENTIAL_DEPOSIT: Balance = MILLIUNIT;
 
-/// We assume that ~5% of the block weight is consumed by `on_initialize` handlers. This is
-/// used to limit the maximal weight of a single extrinsic.
-const AVERAGE_ON_INITIALIZE_RATIO: Perbill = Perbill::from_percent(5);
+// TODO: Configure variable
+// /// We assume that ~5% of the block weight is consumed by `on_initialize` handlers. This is
+// /// used to limit the maximal weight of a single extrinsic.
+// const AVERAGE_ON_INITIALIZE_RATIO: Perbill = Perbill::from_percent(5);
 
 /// We allow `Normal` extrinsics to fill up the block up to 75%, the rest can be used by
 /// `Operational` extrinsics.
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 
-/// We allow for 2 seconds of compute with a 6-second average block.
-const MAXIMUM_BLOCK_WEIGHT: Weight = Weight::from_parts(
-    WEIGHT_REF_TIME_PER_SECOND.saturating_mul(2),
-    cumulus_primitives_core::relay_chain::MAX_POV_SIZE as u64,
-);
+// TODO: Configure variable
+// /// We allow for 2 seconds of compute with a 6-second average block.
+// const MAXIMUM_BLOCK_WEIGHT: Weight = Weight::from_parts(
+//     WEIGHT_REF_TIME_PER_SECOND.saturating_mul(2),
+//     cumulus_primitives_core::relay_chain::MAX_POV_SIZE as u64,
+// );
 
-/// Maximum number of blocks simultaneously accepted by the Runtime, not yet included
-/// into the relay chain.
-const UNINCLUDED_SEGMENT_CAPACITY: u32 = 3;
-/// How many parachain blocks are processed by the relay chain per parent. Limits the
-/// number of blocks authored per slot.
-const BLOCK_PROCESSING_VELOCITY: u32 = 1;
-/// Relay chain slot duration, in milliseconds.
-const RELAY_CHAIN_SLOT_DURATION_MILLIS: u32 = 6000;
+// TODO: Constant variables for the consensus hook
+// /// Maximum number of blocks simultaneously accepted by the Runtime, not yet included
+// /// into the relay chain.
+// const UNINCLUDED_SEGMENT_CAPACITY: u32 = 3;
+// /// How many parachain blocks are processed by the relay chain per parent. Limits the
+// /// number of blocks authored per slot.
+// const BLOCK_PROCESSING_VELOCITY: u32 = 1;
+// /// Relay chain slot duration, in milliseconds.
+// const RELAY_CHAIN_SLOT_DURATION_MILLIS: u32 = 6000;
 
-/// Aura consensus hook
-type ConsensusHook = cumulus_pallet_aura_ext::FixedVelocityConsensusHook<
-    Runtime,
-    RELAY_CHAIN_SLOT_DURATION_MILLIS,
-    BLOCK_PROCESSING_VELOCITY,
-    UNINCLUDED_SEGMENT_CAPACITY,
->;
+// TODO: Configure Cumulus Aura consensus hook
 
 /// The version information used to identify this runtime when compiled natively.
 #[cfg(feature = "std")]
@@ -280,12 +281,13 @@ mod runtime {
     // System support stuff.
     #[runtime::pallet_index(0)]
     pub type System = frame_system::Pallet<Runtime>;
-    #[runtime::pallet_index(1)]
-    pub type ParachainSystem = cumulus_pallet_parachain_system::Pallet<Runtime>;
+
+    // TODO: Configure Parachain System (Index = 1)
+
     #[runtime::pallet_index(2)]
     pub type Timestamp = pallet_timestamp::Pallet<Runtime>;
-    #[runtime::pallet_index(3)]
-    pub type ParachainInfo = parachain_info::Pallet<Runtime>;
+
+    // TODO: Configure Parachain Info (Index = 2)
 
     // Monetary stuff.
     #[runtime::pallet_index(10)]
@@ -300,27 +302,28 @@ mod runtime {
     // Collator support. The order of these 4 are important and shall not change.
     #[runtime::pallet_index(20)]
     pub type Authorship = pallet_authorship::Pallet<Runtime>;
-    #[runtime::pallet_index(21)]
-    pub type CollatorSelection = pallet_collator_selection::Pallet<Runtime>;
+
+    // TODO: Configure Collator Selection (Index = 21)
+
     #[runtime::pallet_index(22)]
     pub type Session = pallet_session::Pallet<Runtime>;
     #[runtime::pallet_index(23)]
     pub type Aura = pallet_aura::Pallet<Runtime>;
-    #[runtime::pallet_index(24)]
-    pub type AuraExt = cumulus_pallet_aura_ext;
+
+    // TODO: Configure Cumulus Pallet Aura Extension (Index = 24)
+
+    #[runtime::pallet_index(25)]
+    pub type Grandpa = pallet_grandpa::Pallet<Runtime>;
 
     // XCM helpers.
-    #[runtime::pallet_index(30)]
-    pub type XcmpQueue = cumulus_pallet_xcmp_queue::Pallet<Runtime>;
-    #[runtime::pallet_index(31)]
-    pub type PolkadotXcm = pallet_xcm::Pallet<Runtime>;
-    #[runtime::pallet_index(32)]
-    pub type CumulusXcm = cumulus_pallet_xcm::Pallet<Runtime>;
-    #[runtime::pallet_index(33)]
-    pub type MessageQueue = pallet_message_queue::Pallet<Runtime>;
+
+    // TODO: Configure XCMP Queue as a message queue for XCM instructions (Index = 30)
+
+    // TODO: Configure XCM module (Index = 31)
+
+    // TODO: Configure Cumulus XCM module (Index = 32)
+
+    // TODO: Configure Message Queue (Index = 33)
 }
 
-cumulus_pallet_parachain_system::register_validate_block! {
-    Runtime = Runtime,
-    BlockExecutor = cumulus_pallet_aura_ext::BlockExecutor::<Runtime, Executive>,
-}
+// TODO: Register validate block
